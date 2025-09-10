@@ -5,7 +5,9 @@ from django.db import models
 class Empresa(models.Model):
     nome = models.CharField()
     cnpj = models.CharField()
-    status = models.BooleanField()
+    regime_federal = models.CharField()
+    grupo = models.CharField(null=True)
+    status = models.CharField()
 
     def __str__(self):
             return self.nome
@@ -17,7 +19,6 @@ class User_model(models.Model):
 
     def __str__(self):
       return self.nome
-
 
 class User_empresa(models.Model):
     nome = models.CharField()

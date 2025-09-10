@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'core_tarefas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'new_gestta',
+        'NAME': 'gerenciador_empresas',
         'USER': 'root_matheuz',
         'PASSWORD': '13579',
         'HOST': 'localhost',
