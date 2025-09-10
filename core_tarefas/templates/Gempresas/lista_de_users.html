@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de usuários</title>
+</head>
+
+<body>
+    <h1>Lista de usuários</h1>
+    <p>Aqui você pode gerenciar as usuários que você tem</p>
+
+    
+    <header>
+        <a href="#">Adicionar usuários</a>
+        <a href="#">Inativar usuários</a>
+        <a href="{% url 'home' %}">Home</a>
+    </header>
+
+
+    <div class="conteiner">
+        <p>Total de usuários: {{tamanho}} </p>
+    </div>
+
+
+    <table>
+        <thead>
+            <th>Nome</th>
+            <th>email</th>
+            <th>senha</th>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th>{{ user.nome}}</th>
+                <th>{{ user.email}}</th>
+                <th>{{ user.senha}}</th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+ 
+</body>
+
+</html>

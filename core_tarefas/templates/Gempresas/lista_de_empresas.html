@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de empresas</title>
+</head>
+
+<body>
+    <h1>Lista de empresas</h1>
+    <p>Aqui você pode gerenciar as empresas que você tem como cliente</p>
+
+    
+    <header>
+        <a href="#">Adicionar empresa</a>
+        <a href="#">Inativar empresa</a>
+        <a href="{% url 'home' %}">Home</a>
+    </header>
+
+
+    <div class="conteiner">
+        <p>Total de empresas: {{tamanho}} </p>
+    </div>
+
+
+    <table>
+        <thead>
+            <th>Nome</th>
+            <th>CNPJ</th>
+            <th>Ativo</th>
+        </thead>
+        <tbody>
+        {% for empresa in empresas %}
+            <tr>
+                <th>{{ empresa.nome}}</th>
+                <th>{{ empresa.cnpj}}</th>
+                <th>{{ empresa.status}}</th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+ 
+</body>
+
+</html>
