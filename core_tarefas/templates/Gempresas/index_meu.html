@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Responsiva</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Sidebar estilo desktop (inicialmente minimizada) */
+        #sidebar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 70px;
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar expandida no hover (desktop) */
+        #sidebar:hover {
+            width: 250px;
+        }
+
+        /* Conteúdo da sidebar */
+        .sidebar_content {
+            padding: 5px;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        /* Estilo para desktop */
+        @media (min-width: 992px) {
+            body {
+                margin-left: 70px;
+            }
+            
+            #sidebar:hover {
+                width: 250px;
+            }
+            
+            #sidebar:hover .item-description {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            
+            #sidebar:hover #user_infos {
+                opacity: 1;
+            }
+            
+            #sidebar:hover #user {
+                justify-content: flex-start;
+                padding-left: 15px;
+            }
+            
+            #open_btn {
+                display: none;
+            }
+        }
+
+        /* Estilo para mobile */
+        @media (max-width: 991px) {
+            #sidebar {
+                left: -250px;
+                width: 250px;
+            }
+            
+            #sidebar.active {
+                left: 0;
+            }
+            
+            body {
+                margin-left: 0;
+            }
+            
+            body.sidebar-active {
+                margin-left: 250px;
+            }
+            
+            #open_btn {
+                display: flex;
+            }
+            
+            .item-description {
+                opacity: 1 !important;
+                transform: translateX(0) !important;
+            }
+            
+            #user_infos {
+                opacity: 1 !important;
+            }
+        }
+
+        #user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px 10px;
+            transition: all 0.3s ease;
+            justify-content: center;
+        }
+
+        #user_avatar {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #3498db;
+        }
+
+        #user_infos {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        #user_nome {
+            margin: 0;
+            font-weight: 600;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        #user_cargo {
+            color: #bdc3c7;
+            font-size: 13px;
+        }
+
+        #side_items {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin: 10px;
+            padding: 0px;
+            list-style: none;
+        }
+
+        .side-item {
+            border-radius: 8px;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .side-item.active {
+            background-color: #3498db;
+        }
+
+        .side-item:hover:not(.active) {
+            background-color: #34495e;
+        }
+
+        .side-item a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #ecf0f1;
+        }
+
+        .side-item.active a {
+            color: white;
+        }
+
+        .side-item a i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            font-size: 18px;
+        }
+
+        .item-description {
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+        }
+
+        #logout {
+            border-top: 1px solid #34495e;
+            padding: 15px;
+        }
+
+        #logout_btn {
+            border: none;
+            padding: 12px 15px;
+            font-size: 14px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            border-radius: 8px;
+            text-align: start;
+            cursor: pointer;
+            background-color: transparent;
+            width: 100%;
+            color: #ecf0f1;
+        }
+
+        #logout_btn:hover {
+            background-color: #34495e;
+        }
+
+        #open_btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #3498db;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            border: none;
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+        }
+
+        main {
+            padding: 30px;
+            width: 100%;
+            transition: margin-left 0.3s ease;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay para fechar a sidebar no mobile -->
+    <div id="overlay"></div>
+
+    <!-- Botão para abrir a sidebar (visível apenas em mobile) -->
+    <button id="open_btn">
+        <i id="open_btn_icon" class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div id="sidebar_content">
+            <div id="user">  
+                <img id="user_avatar" src="data:image/jpeg;base64,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" alt="imagem do user">
+                <div id="user_infos">
+                    <p id="user_nome">João Brandão</p>
+                    <p id="user_cargo">Administrador</p>
+                </div>
+            </div>
+
+            <ul id="side_items">
+                <li class="side-item active">
+                    <a href="#">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="item-description">Pesquisar</span>
+                    </a>
+                </li>
+                <li class="side-item">
+                    <a href="#">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="item-description">Notificações</span>
+                    </a>
+                </li>
+                <li class="side-item">
+                    <a href="{% url 'listar_empresas' %}">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="item-description">Clientes</span>
+                    </a>
+                </li>
+                <li class="side-item">
+                    <a href="#">
+                        <i class="fa-solid fa-chart-bar"></i>
+                        <span class="item-description">Relatórios</span>
+                    </a>
+                </li>
+                <li class="side-item">
+                    <a href="#">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="item-description">Configurações</span>
+                    </a>
+                </li>
+                <li class="side-item">
+                    <a href="#">
+                        <i class="fa-solid fa-file"></i>
+                        <span class="item-description">Documentos</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="logout">
+            <button id="logout_btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span class="item-description">Logout</span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="content-card">
+            
+            {% block content %}
+            {% endblock %}
+            
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const openBtn = document.getElementById('open_btn');
+            const openBtnIcon = document.getElementById('open_btn_icon');
+            const overlay = document.getElementById('overlay');
+            const body = document.body;
+            
+            // Função para abrir a sidebar no mobile
+            function openSidebar() {
+                sidebar.classList.add('active');
+                body.classList.add('sidebar-active');
+                overlay.style.display = 'block';
+                openBtnIcon.classList.remove('fa-bars');
+                openBtnIcon.classList.add('fa-times');
+            }
+            
+            // Função para fechar a sidebar no mobile
+            function closeSidebar() {
+                sidebar.classList.remove('active');
+                body.classList.remove('sidebar-active');
+                overlay.style.display = 'none';
+                openBtnIcon.classList.remove('fa-times');
+                openBtnIcon.classList.add('fa-bars');
+            }
+            
+            // Event listeners para mobile
+            openBtn.addEventListener('click', function() {
+                if (sidebar.classList.contains('active')) {
+                    closeSidebar();
+                } else {
+                    openSidebar();
+                }
+            });
+            
+            overlay.addEventListener('click', closeSidebar);
+            
+            // Fechar a sidebar ao clicar em um item (apenas em mobile)
+            const sideItems = document.querySelectorAll('.side-item, #logout_btn');
+            sideItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (window.innerWidth < 992) {
+                        closeSidebar();
+                    }
+                });
+            });
+            
+            // Ajustar ao redimensionar a janela
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 992) {
+                    // Em desktop, garantir que a sidebar está no modo minimizado
+                    sidebar.classList.remove('active');
+                    body.classList.remove('sidebar-active');
+                    overlay.style.display = 'none';
+                } else {
+                    // Em mobile, garantir que a sidebar está fechada
+                    sidebar.classList.remove('active');
+                    body.classList.remove('sidebar-active');
+                    overlay.style.display = 'none';
+                    openBtnIcon.classList.remove('fa-times');
+                    openBtnIcon.classList.add('fa-bars');
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+</body>
+</html>

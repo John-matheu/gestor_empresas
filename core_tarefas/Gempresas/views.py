@@ -8,7 +8,7 @@ from .form import Empresaform
 
 
 def home(request):
-    return render(request, 'Gempresas/index.html')
+    return render(request, 'Gempresas/index_meu.html')
 
 
 # ------------------------------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ def empresas(request):
 def listar_empresas(request):
     emp = Empresa.objects.all()
     tamanho = len(emp)
-    return render(request, 'Gempresas/lista_de_empresas.html', {'empresas': emp, 'tamanho': tamanho})
+    return render(request, 'Gempresas/lista_de_empresas_meu.html', {'empresas': emp, 'tamanho': tamanho})
 
 def add_empresa(request):
     if request.method == 'POST':
@@ -47,7 +47,7 @@ def edit_empresa(request, id):
     else:
         form = Empresaform(instance=empresa)
 
-    return render(request, 'Gempresas/edit_empresa.html', {'form': form})
+    return render(request, 'Gempresas/edit_empresa_meu.html', {'form': form})
 
 def delete_empresa(request, id):
     empresa = get_object_or_404(Empresa, id=id)

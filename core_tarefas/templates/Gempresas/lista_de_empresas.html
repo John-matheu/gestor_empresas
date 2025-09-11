@@ -199,7 +199,7 @@
                                 <td class="ps-4 fw-medium">{{ empresa.nome }}</td>
                                 <td>{{ empresa.cnpj }}</td>
                                 <td>
-                                    {% if empresa.status == ativo %}
+                                    {% if empresa.status %}
                                     <span class="status-badge bg-success">Ativo</span>
                                     {% else %}
                                     <span class="status-badge bg-danger">Inativo</span>
