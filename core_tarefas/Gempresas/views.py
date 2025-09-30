@@ -49,6 +49,7 @@ def edit_empresa(request, id):
 
     return render(request, 'Gempresas/edit_empresa_meu.html', {'form': form})
 
+
 def delete_empresa(request, id):
     empresa = get_object_or_404(Empresa, id=id)
     empresa.delete()

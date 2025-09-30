@@ -60,11 +60,20 @@
                                 <td class="ps-4 fw-medium">{{ empresa.nome }}</td>
                                 <td>{{ empresa.cnpj }}</td>
                                 <td>
-                                    {% if empresa.status %}
+                                    {% if empresa.status == 'A' %}
                                     <span class="status-badge bg-success">Ativo</span>
-                                    {% else %}
-                                    <span class="status-badge bg-danger">Inativo</span>
                                     {% endif %}
+                                    
+                                    {% if empresa.status == 'I' %}
+                                    <span class="status-badge bg-danger">Inativa</span>
+                                    {% endif %}
+
+                                    {% if empresa.status == 'S' %}
+                                    <span class="status-badge bg-warning">Suspensa</span>
+                                    {% endif %}
+
+
+                                    
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
