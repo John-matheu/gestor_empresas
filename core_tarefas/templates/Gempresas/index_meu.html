@@ -329,9 +329,15 @@
 
             <ul id="side_items">
                 <li class="side-item active">
-                    <a href="#">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <span class="item-description">Pesquisar</span>
+                    <a href="{% url 'home'  %}">
+                        <i class="fa-solid fa-house-user"></i>
+                        <span class="item-description">Dashboard</span>
+                    </a>
+                </li>
+                <li class="side-item">
+                    <a href="{% url 'listar_users' %}">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="item-description">Colaboradores</span>
                     </a>
                 </li>
                 <li class="side-item">
@@ -342,8 +348,14 @@
                 </li>
                 <li class="side-item">
                     <a href="{% url 'listar_empresas' %}">
-                        <i class="fa-solid fa-users"></i>
+                        <i class="fa-solid fa-building-user"></i>
                         <span class="item-description">Clientes</span>
+                    </a>
+                </li>
+                <li class="side-item">
+                    <a href="{% url 'listar_users_empresas' %}">
+                        <i class="fa-solid fa-user-tie"></i>    
+                        <span class="item-description">Usuários externos</span>
                     </a>
                 </li>
                 <li class="side-item">

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Empresa
+from .models import Empresa, User_model, User_empresa
 
 
 class Empresaform(forms.ModelForm):
@@ -15,6 +15,11 @@ class Empresaform(forms.ModelForm):
         }
 
 
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User_empresa
+        fields = ['nome', 'email', 'senha']
+        
 
 
 

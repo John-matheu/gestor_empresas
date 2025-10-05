@@ -22,6 +22,7 @@ class User_model(models.Model):
     nome = models.CharField()
     email = models.CharField()
     senha = models.CharField()
+    status = models.BooleanField()
 
     def __str__(self):
       return self.nome
@@ -30,6 +31,7 @@ class User_empresa(models.Model):
     nome = models.CharField()
     email = models.CharField()
     senha = models.CharField()
+    status = models.BooleanField()
 
     def __str__(self):
         return self.nome

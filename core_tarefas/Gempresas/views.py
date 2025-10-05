@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.http import HttpResponse
 
-from .models import Empresa, User_model, User_empresa
+from .models import Empresa, User_model, User_empresa, User_model, User_empresa 
 from .form import Empresaform
 
 # Create your views here.
@@ -72,5 +72,12 @@ def listar_user_empresas(request):
     user_empresa = User_empresa.objects.all()
     tamanho = len(user_empresa)
     return render(request, 'Gempresas/listar_usuarios_clientes.html', {'usuarios_clientes': user_empresa, 'tamanho': tamanho })
+
+
+def add_user(request):
+    pass
+
+def add_user_empresa(request):
+    pass
 
 
